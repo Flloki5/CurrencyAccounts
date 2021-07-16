@@ -1,5 +1,6 @@
 package com.currencyapp.client;
 
+import com.currencyapp.models.Currency;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
@@ -24,7 +25,7 @@ public class NbpClient {
         this.objectMapper = objectMapper;
     }
 
-    public Long getNBPCurrencies(String code) throws URISyntaxException, IOException, InterruptedException {
+    public Currency getNbpCurrency(String code) throws URISyntaxException, IOException, InterruptedException {
 
         HttpRequest httpRequest = HttpRequest.newBuilder()
                 .uri(new URI("https://api.nbp.pl/api/exchangerates/rates/a/" + code))
@@ -34,7 +35,7 @@ public class NbpClient {
 
         HttpResponse<String> httpResponse = httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofString());
 
-        return objectMapper.readValue(httpResponse.body(), Long.class);
+        return objectMapper.readValue(httpResponse.body(), Currency.class);
     }
 }
 
