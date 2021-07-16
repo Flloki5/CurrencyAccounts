@@ -1,12 +1,11 @@
-package com.currencyapp.models;
+package com.currencyapp.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 
-@Entity
-public class Account {
+import javax.persistence.*;
+
+@Entity(name = "user")
+@Table(name = "users")
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,14 +16,14 @@ public class Account {
     private Long pesel;
     private float amount;
 
-    public Account(String name, String surname, Long pesel, float amount) {
+    public User(String name, String surname, Long pesel, float amount) {
         this.name = name;
         this.surname = surname;
         this.pesel = pesel;
         this.amount = amount;
     }
 
-    public Account() {
+    public User() {
     }
 
     public Long getId() {

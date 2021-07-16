@@ -1,4 +1,4 @@
-package com.currencyapp.models;
+package com.currencyapp.model;
 
 import java.util.List;
 

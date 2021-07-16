@@ -1,6 +1,6 @@
 package com.currencyapp.client;
 
-import com.currencyapp.models.Currency;
+import com.currencyapp.model.Currency;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
