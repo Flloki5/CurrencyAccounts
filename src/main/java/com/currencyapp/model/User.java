@@ -2,7 +2,6 @@ package com.currencyapp.model;
 
 
 import javax.persistence.*;
-import java.util.Map;
 
 @Entity(name = "user")
 @Table(name = "users")
@@ -18,17 +17,16 @@ public class User {
     private float amountPLN;
     private float amountUSD;
 
-
     public User() {
     }
 
-    public User(Long id, String name, String surname, Long pesel, float amountPLN) {
+    public User(Long id, String name, String surname, Long pesel, float amountPLN, float amountUSD) {
         this.id = id;
         this.name = name;
         this.surname = surname;
         this.pesel = pesel;
         this.amountPLN = amountPLN;
-        this.amountUSD = 0;
+        this.amountUSD = amountUSD;
     }
 
     public Long getId() {

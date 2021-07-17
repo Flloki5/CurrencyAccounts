@@ -17,7 +17,9 @@ public class UserService {
     }
 
     public void create(User user){
-        userRepository.save(user);
+        if(isUserExist(user) && ){
+            userRepository.save(user);
+        }
     }
 
     public void deleteById(Long id){
@@ -26,7 +28,8 @@ public class UserService {
 
     public User getByPesel(Long pesel) throws AccountNotFoundException {
         return userRepository.findByPesel(pesel)
-                .orElseThrow(() -> new AccountNotFoundException(pesel));
+                .orElseThrow(() -> new AccountNotFoundException("Account with pesel: " + pesel + " do not exist."));
+
     }
 
     public List<User> getAllUsers(){
@@ -46,5 +49,14 @@ public class UserService {
         }
 
         userRepository.save(user);
+    }
+
+    public boolean isUserExist(User user){
+        return userRepository.findByPesel(user.getPesel()).isEmpty();
+    }
+
+    public boolean isOverEighteen(User user){
+        Long pesel = user.getPesel();
+        return false;
     }
 }
