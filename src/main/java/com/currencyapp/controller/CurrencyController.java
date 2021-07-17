@@ -23,14 +23,18 @@ public class CurrencyController {
         return nbpClient.getNbpCurrency(code);
     }
 
-    @GetMapping(value = "/exchange/{value}/{to}")
+    @GetMapping(value = "/exchange/{from}/{to}/{value}")
     @ResponseBody
-    public float calculateExchange(@PathVariable("value") Float value,
-                                   @PathVariable("to") String to) throws URISyntaxException, IOException, InterruptedException {
+    public float calculateExchange(@PathVariable Float value,
+                                   @PathVariable String from,
+                                   @PathVariable String to) throws URISyntaxException, IOException, InterruptedException {
 
-        Currency targetCurrency = getCurrencyDataByCode(to);
-//        Currency currentCurrency = getCurrencyDataByCode(from);
-
-        return targetCurrency.getRates().get(0).getMid() * value;
+        if(to.equalsIgnoreCase("PLN")){
+            Currency targetCurrency = getCurrencyDataByCode(from);
+            return value * targetCurrency.getRates().get(0).getMid();
+        }else{
+            Currency targetCurrency = getCurrencyDataByCode(to);
+            return value / targetCurrency.getRates().get(0).getMid();
+        }
     }
 }

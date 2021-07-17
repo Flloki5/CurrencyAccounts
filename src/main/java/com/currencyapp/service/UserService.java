@@ -27,10 +27,24 @@ public class UserService {
     public User getByPesel(Long pesel) throws AccountNotFoundException {
         return userRepository.findByPesel(pesel)
                 .orElseThrow(() -> new AccountNotFoundException(pesel));
-
     }
 
     public List<User> getAllUsers(){
         return userRepository.findAll();
+    }
+
+    public void updateSubaccountsAmount(User user, String from, String to, float amount, float convertedAmount){
+        float amountUSD = user.getAmountUSD();
+        float amountPLN = user.getAmountPLN();
+
+        if(from.equalsIgnoreCase("USD")){
+            user.setAmountUSD(amountUSD - amount);
+            user.setAmountPLN(amountPLN + convertedAmount);
+        }else if(to.equalsIgnoreCase("USD")){
+            user.setAmountUSD(amountUSD + convertedAmount);
+            user.setAmountPLN(amountPLN - amount);
+        }
+
+        userRepository.save(user);
     }
 }
