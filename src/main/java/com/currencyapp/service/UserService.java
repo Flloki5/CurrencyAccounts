@@ -5,6 +5,9 @@ import com.currencyapp.model.User;
 import com.currencyapp.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.Period;
+import java.util.Calendar;
 import java.util.List;
 
 @Service
@@ -17,7 +20,7 @@ public class UserService {
     }
 
     public void create(User user){
-        if(isUserExist(user) && ){
+        if(isUserExist(user) && isOverEighteen(user)){
             userRepository.save(user);
         }
     }
@@ -56,7 +59,34 @@ public class UserService {
     }
 
     public boolean isOverEighteen(User user){
-        Long pesel = user.getPesel();
-        return false;
+        String sPesel = Long.toString(user.getPesel());
+        return convertPeselToAge(sPesel) >= 18;
+    }
+
+    public int convertPeselToAge(String pesel){
+        Calendar c = Calendar.getInstance();
+        LocalDate actualDate = LocalDate.of(c.get(Calendar.YEAR), c.get(Calendar.MONTH) + 1, c.get(Calendar.DATE));
+
+        int birthYear;
+        int birthMonth = Integer.parseInt(pesel.substring(2, 4));
+
+        if(birthMonth > 20){
+            birthYear = Integer.parseInt("20" + pesel.substring(0, 2));
+            birthMonth = birthMonth - 20;
+        }else{
+            birthYear = Integer.parseInt("19" + pesel.substring(0, 2));
+        }
+        int birthDay = Integer.parseInt(pesel.substring(4, 6));
+        LocalDate birthDate = LocalDate.of(birthYear, birthMonth, birthDay);
+
+        return Period.between(birthDate, actualDate).getYears();
+    }
+
+    public boolean isEnoughAmount(User user, float amount, String code){
+        if(code.equalsIgnoreCase("USD")){
+            return user.getAmountUSD() >= amount;
+        }else{
+            return user.getAmountPLN() >= amount;
+        }
     }
 }

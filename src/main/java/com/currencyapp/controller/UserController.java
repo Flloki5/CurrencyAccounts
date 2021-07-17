@@ -58,7 +58,12 @@ public class UserController {
                                           @PathVariable Float amount) throws URISyntaxException, IOException, InterruptedException, AccountNotFoundException {
         float convertedAmount = currencyController.calculateExchange(amount, from, to);
         User user = getUserByPesel(pesel);
-        userService.updateSubaccountsAmount(user, from, to, amount, convertedAmount);
+        if(userService.isEnoughAmount(user, amount, from)){
+            userService.updateSubaccountsAmount(user, from, to, amount, convertedAmount);
+        }else{
+            System.out.println("Za mało środków na koncie");
+        }
+
 
     }
 }
