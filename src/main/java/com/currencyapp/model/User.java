@@ -2,6 +2,7 @@ package com.currencyapp.model;
 
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 
 @Entity(name = "user")
 @Table(name = "users")
@@ -13,14 +14,14 @@ public class User {
 
     private String name;
     private String surname;
-    private Long pesel;
-    private float amountPLN;
-    private float amountUSD;
+    private String pesel;
+    private BigDecimal amountPLN;
+    private BigDecimal amountUSD;
 
     public User() {
     }
 
-    public User(Long id, String name, String surname, Long pesel, float amountPLN, float amountUSD) {
+    public User(Long id, String name, String surname, String pesel, BigDecimal amountPLN, BigDecimal amountUSD) {
         this.id = id;
         this.name = name;
         this.surname = surname;
@@ -49,28 +50,28 @@ public class User {
         this.surname = surname;
     }
 
-    public Long getPesel() {
+    public String getPesel() {
         return pesel;
     }
 
-    public void setPesel(Long pesel) {
+    public void setPesel(String pesel) {
         this.pesel = pesel;
     }
 
 
-    public float getAmountPLN() {
+    public BigDecimal getAmountPLN() {
         return amountPLN;
     }
 
-    public void setAmountPLN(float amountPLN) {
+    public void setAmountPLN(BigDecimal amountPLN) {
         this.amountPLN = amountPLN;
     }
 
-    public float getAmountUSD() {
+    public BigDecimal getAmountUSD() {
         return amountUSD;
     }
 
-    public void setAmountUSD(float amountUSD) {
+    public void setAmountUSD(BigDecimal amountUSD) {
         this.amountUSD = amountUSD;
     }
 }

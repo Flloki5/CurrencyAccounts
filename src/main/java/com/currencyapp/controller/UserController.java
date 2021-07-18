@@ -1,15 +1,14 @@
 package com.currencyapp.controller;
 
-import com.currencyapp.client.NbpClient;
 import com.currencyapp.exception.AccountNotFoundException;
 import com.currencyapp.model.User;
 import com.currencyapp.service.UserService;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.net.URISyntaxException;
 import java.util.List;
-import java.util.Locale;
 
 import static org.springframework.http.HttpStatus.NO_CONTENT;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
@@ -34,7 +33,7 @@ public class UserController {
 
     @GetMapping(value = "/{pesel}")
     @ResponseBody
-    public User getUserByPesel(@PathVariable Long pesel) throws AccountNotFoundException {
+    public User getUserByPesel(@PathVariable String pesel) throws AccountNotFoundException {
         return userService.getByPesel(pesel);
     }
 
@@ -52,11 +51,11 @@ public class UserController {
 
     @GetMapping(value = "/{pesel}/{from}/{to}/{amount}")
     @ResponseBody
-    public void convertBetweenSubaccounts(@PathVariable Long pesel,
+    public void convertBetweenSubaccounts(@PathVariable String pesel,
                                           @PathVariable String from,
                                           @PathVariable String to,
-                                          @PathVariable Float amount) throws URISyntaxException, IOException, InterruptedException, AccountNotFoundException {
-        float convertedAmount = currencyController.calculateExchange(amount, from, to);
+                                          @PathVariable BigDecimal amount) throws URISyntaxException, IOException, InterruptedException, AccountNotFoundException {
+        BigDecimal convertedAmount = currencyController.calculateExchange(amount, from, to);
         User user = getUserByPesel(pesel);
         if(userService.isEnoughAmount(user, amount, from)){
             userService.updateSubaccountsAmount(user, from, to, amount, convertedAmount);

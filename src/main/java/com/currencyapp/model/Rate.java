@@ -1,21 +1,23 @@
 package com.currencyapp.model;
 
+import java.math.BigDecimal;
+
 public class Rate {
 
-    public float mid;
+    public BigDecimal mid;
 
-    public Rate( float mid) {
+    public Rate(BigDecimal mid) {
         this.mid = mid;
     }
 
     public Rate() {
     }
 
-    public float getMid() {
+    public BigDecimal getMid() {
         return mid;
     }
 
-    public void setMid(float mid) {
+    public void setMid(BigDecimal mid) {
         this.mid = mid;
     }
 }

@@ -5,6 +5,8 @@ import com.currencyapp.model.Currency;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.MathContext;
 import java.net.URISyntaxException;
 
 @RestController
@@ -25,16 +27,16 @@ public class CurrencyController {
 
     @GetMapping(value = "/exchange/{from}/{to}/{value}")
     @ResponseBody
-    public float calculateExchange(@PathVariable Float value,
+    public BigDecimal calculateExchange(@PathVariable BigDecimal value,
                                    @PathVariable String from,
                                    @PathVariable String to) throws URISyntaxException, IOException, InterruptedException {
 
         if(to.equalsIgnoreCase("PLN")){
             Currency targetCurrency = getCurrencyDataByCode(from);
-            return value * targetCurrency.getRates().get(0).getMid();
+            return value.multiply(targetCurrency.getRates().get(0).getMid());
         }else{
             Currency targetCurrency = getCurrencyDataByCode(to);
-            return value / targetCurrency.getRates().get(0).getMid();
+            return value.divide(targetCurrency.getRates().get(0).getMid(), MathContext.DECIMAL32);
         }
     }
 }
