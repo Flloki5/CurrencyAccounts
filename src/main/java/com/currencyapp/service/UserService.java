@@ -1,8 +1,8 @@
 package com.currencyapp.service;
 
-import com.currencyapp.exception.AccountNotFoundException;
 import com.currencyapp.model.User;
 import com.currencyapp.repository.UserRepository;
+import javassist.NotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -10,6 +10,7 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -30,10 +31,14 @@ public class UserService {
         userRepository.deleteById(id);
     }
 
-    public User getByPesel(String pesel) throws AccountNotFoundException {
-        return userRepository.findByPesel(pesel)
-                .orElseThrow(() -> new AccountNotFoundException("Account with pesel: " + pesel + " do not exist."));
+    public User getByPesel(String pesel) throws NotFoundException {
 
+        Optional<User> user = userRepository.findByPesel(pesel);
+        if(user.isEmpty()){
+            throw new NotFoundException("User do not exist");
+        }else{
+            return user.get();
+        }
     }
 
     public List<User> getAllUsers() {

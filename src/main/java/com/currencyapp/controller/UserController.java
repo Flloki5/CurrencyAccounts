@@ -1,15 +1,13 @@
 package com.currencyapp.controller;
 
-import com.currencyapp.exception.AccountNotFoundException;
 import com.currencyapp.model.User;
 import com.currencyapp.service.UserService;
+import javassist.NotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
 import java.math.BigDecimal;
-import java.net.URISyntaxException;
 import java.util.List;
 
 import static org.springframework.http.HttpStatus.NO_CONTENT;
@@ -36,7 +34,7 @@ public class UserController {
 
     @GetMapping(value = "/{pesel}")
     @ResponseBody
-    public User getUserByPesel(@PathVariable String pesel) throws AccountNotFoundException {
+    public User getUserByPesel(@PathVariable String pesel) throws NotFoundException {
         return userService.getByPesel(pesel);
     }
 
@@ -57,17 +55,16 @@ public class UserController {
     public void convertBetweenSubaccounts(@PathVariable String pesel,
                                           @PathVariable String from,
                                           @PathVariable String to,
-                                          @PathVariable BigDecimal amount) throws URISyntaxException, IOException, InterruptedException, AccountNotFoundException {
+                                          @PathVariable BigDecimal amount){
         try {
             BigDecimal convertedAmount = currencyController.calculateExchange(amount, from, to);
             User user = getUserByPesel(pesel);
             if (userService.isEnoughAmount(user, amount, from)) {
                 userService.updateSubaccountsAmount(user, from, to, amount, convertedAmount);
-            } else {
-                System.out.println("Za mało środków na koncie");
             }
-        }catch (AccountNotFoundException e){
-            log.error("Account not found in db", e);
+        }catch (NotFoundException e){
+            log.error("User do not exist in db", e);
+            e.printStackTrace();
         }
 
 
