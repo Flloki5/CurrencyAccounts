@@ -6,10 +6,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.MathContext;
-import java.net.URISyntaxException;
 
 @RestController
 @RequestMapping(value = "/api/v1/currency")
@@ -28,8 +26,8 @@ public class CurrencyController {
         Currency nbpCurrency = null;
         try{
             nbpCurrency = nbpClient.getNbpCurrency(code);
-        } catch (URISyntaxException|InterruptedException|IOException e){
-            log.error("API Nbp error");
+        } catch (Exception e){
+            log.error("API NBP error", e);
         }
         return nbpCurrency;
     }

@@ -64,9 +64,6 @@ public class UserController {
             }
         }catch (NotFoundException e){
             log.error("User do not exist in db", e);
-            e.printStackTrace();
         }
-
-
     }
 }
