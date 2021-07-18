@@ -1,23 +1,39 @@
 package com.currencyapp.model;
 
+import com.fasterxml.jackson.annotation.JsonSetter;
+
 import java.math.BigDecimal;
 
 public class Rate {
 
-    public BigDecimal mid;
+    @JsonSetter("bid")
+    public BigDecimal sellRate;
 
-    public Rate(BigDecimal mid) {
-        this.mid = mid;
+    @JsonSetter("ask")
+    public BigDecimal buyRate;
+
+
+    public Rate(BigDecimal sellRate, BigDecimal buyRate) {
+        this.sellRate = sellRate;
+        this.buyRate = buyRate;
     }
 
     public Rate() {
     }
 
-    public BigDecimal getMid() {
-        return mid;
+    public BigDecimal getSellRate() {
+        return sellRate;
     }
 
-    public void setMid(BigDecimal mid) {
-        this.mid = mid;
+    public void setSellRate(BigDecimal sellRate) {
+        this.sellRate = sellRate;
+    }
+
+    public BigDecimal getBuyRate() {
+        return buyRate;
+    }
+
+    public void setBuyRate(BigDecimal buyRate) {
+        this.buyRate = buyRate;
     }
 }

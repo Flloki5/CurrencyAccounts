@@ -3,6 +3,8 @@ package com.currencyapp.controller;
 import com.currencyapp.exception.AccountNotFoundException;
 import com.currencyapp.model.User;
 import com.currencyapp.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -19,6 +21,7 @@ public class UserController {
 
     private final CurrencyController currencyController;
     private final UserService userService;
+    private final Logger log = LoggerFactory.getLogger(getClass());
 
     public UserController(UserService userService, CurrencyController currencyController) {
         this.userService = userService;
@@ -55,12 +58,16 @@ public class UserController {
                                           @PathVariable String from,
                                           @PathVariable String to,
                                           @PathVariable BigDecimal amount) throws URISyntaxException, IOException, InterruptedException, AccountNotFoundException {
-        BigDecimal convertedAmount = currencyController.calculateExchange(amount, from, to);
-        User user = getUserByPesel(pesel);
-        if(userService.isEnoughAmount(user, amount, from)){
-            userService.updateSubaccountsAmount(user, from, to, amount, convertedAmount);
-        }else{
-            System.out.println("Za mało środków na koncie");
+        try {
+            BigDecimal convertedAmount = currencyController.calculateExchange(amount, from, to);
+            User user = getUserByPesel(pesel);
+            if (userService.isEnoughAmount(user, amount, from)) {
+                userService.updateSubaccountsAmount(user, from, to, amount, convertedAmount);
+            } else {
+                System.out.println("Za mało środków na koncie");
+            }
+        }catch (AccountNotFoundException e){
+            log.error("Account not found in db", e);
         }
 
 

@@ -28,7 +28,7 @@ public class NbpClient {
     public Currency getNbpCurrency(String code) throws URISyntaxException, IOException, InterruptedException {
 
         HttpRequest httpRequest = HttpRequest.newBuilder()
-                .uri(new URI("https://api.nbp.pl/api/exchangerates/rates/a/" + code))
+                .uri(new URI("https://api.nbp.pl/api/exchangerates/rates/c/" + code))
                 .headers(HttpHeaders.ACCEPT, "application/json")
                 .GET()
                 .build();

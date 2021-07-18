@@ -33,10 +33,10 @@ public class CurrencyController {
 
         if(to.equalsIgnoreCase("PLN")){
             Currency targetCurrency = getCurrencyDataByCode(from);
-            return value.multiply(targetCurrency.getRates().get(0).getMid());
+            return value.multiply(targetCurrency.getRates().get(0).getSellRate());
         }else{
             Currency targetCurrency = getCurrencyDataByCode(to);
-            return value.divide(targetCurrency.getRates().get(0).getMid(), MathContext.DECIMAL32);
+            return value.divide(targetCurrency.getRates().get(0).getBuyRate(), MathContext.DECIMAL32);
         }
     }
 }
