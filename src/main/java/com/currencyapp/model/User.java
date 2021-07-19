@@ -30,6 +30,14 @@ public class User {
         this.amountUSD = amountUSD;
     }
 
+    public User(String name, String surname, String pesel, BigDecimal amountPLN, BigDecimal amountUSD) {
+        this.name = name;
+        this.surname = surname;
+        this.pesel = pesel;
+        this.amountPLN = amountPLN;
+        this.amountUSD = amountUSD;
+    }
+
     public Long getId() {
         return id;
     }

@@ -22,7 +22,7 @@ public class UserService {
     }
 
     public void create(User user) {
-        if (isUserExist(user) && isOverEighteen(user)) {
+        if (isUserExist(user) && isOverEighteen(user.getPesel()) && isPeselValid(user.getPesel())) {
             userRepository.save(user);
         }
     }
@@ -63,9 +63,8 @@ public class UserService {
         return userRepository.findByPesel(user.getPesel()).isEmpty();
     }
 
-    public boolean isOverEighteen(User user) {
-        String sPesel = user.getPesel();
-        return convertPeselToAge(sPesel) >= 18;
+    public boolean isOverEighteen(String pesel) {
+        return convertPeselToAge(pesel) >= 18;
     }
 
     public int convertPeselToAge(String pesel) {
@@ -97,6 +96,9 @@ public class UserService {
         }
 
         return actualAmount.compareTo(demandAmount) >= 0;
+    }
 
+    public boolean isPeselValid(String pesel){
+        return pesel.length() == 11;
     }
 }
