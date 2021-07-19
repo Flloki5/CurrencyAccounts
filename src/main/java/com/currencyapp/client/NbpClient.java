@@ -1,7 +1,6 @@
 package com.currencyapp.client;
 
 import com.currencyapp.model.Currency;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
@@ -33,8 +32,6 @@ public class NbpClient {
                 .headers(HttpHeaders.ACCEPT, "application/json")
                 .GET()
                 .build();
-
-
 
         HttpResponse<String> httpResponse = httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofString());
 

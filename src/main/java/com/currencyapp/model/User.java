@@ -1,6 +1,5 @@
 package com.currencyapp.model;
 
-
 import javax.persistence.*;
 import java.math.BigDecimal;
 
@@ -65,7 +64,6 @@ public class User {
     public void setPesel(String pesel) {
         this.pesel = pesel;
     }
-
 
     public BigDecimal getAmountPLN() {
         return amountPLN;

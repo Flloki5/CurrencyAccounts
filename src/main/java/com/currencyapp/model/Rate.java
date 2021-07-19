@@ -1,7 +1,6 @@
 package com.currencyapp.model;
 
 import com.fasterxml.jackson.annotation.JsonSetter;
-
 import java.math.BigDecimal;
 
 public class Rate {

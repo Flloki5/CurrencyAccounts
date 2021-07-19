@@ -32,7 +32,7 @@ public class CurrencyController {
         return nbpCurrency;
     }
 
-    @GetMapping(value = "/exchange/{from}/{to}/{value}")
+    @GetMapping(value = "/exchange/{value}/{from}/to/{to}")
     @ResponseBody
     public BigDecimal calculateExchange(@PathVariable BigDecimal value,
                                    @PathVariable String from,

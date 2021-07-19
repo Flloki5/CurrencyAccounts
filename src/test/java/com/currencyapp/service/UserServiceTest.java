@@ -62,4 +62,13 @@ public class UserServiceTest {
                 () -> assertFalse(expected1),
                 () -> assertTrue(expected2));
     }
+
+    @Test
+    public void updateSubaccountsAmountTest(){
+        userService.updateSubaccountsAmount(testUser, "PLN", "USD", new BigDecimal(4), new BigDecimal(2));
+
+        assertAll(
+                () -> assertEquals(new BigDecimal(6), testUser.getAmountPLN()),
+                () -> assertEquals(new BigDecimal(7), testUser.getAmountUSD()));
+    }
 }

@@ -51,7 +51,7 @@ public class UserController {
         userService.deleteById(id);
     }
 
-    @GetMapping(value = "/{pesel}/{from}/{to}/{amount}")
+    @GetMapping(value = "/{pesel}/{amount}/{from}/to/{to}")
     @ResponseBody
     public void convertBetweenSubaccounts(@PathVariable String pesel,
                                           @PathVariable String from,
